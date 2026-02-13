@@ -1,0 +1,12 @@
+# .NET
+**/bin/
+**/obj/
+.vs/
+.dotnet/
+.nuget/
+.local/
+.templateengine/
+*.user
+*.suo
+
+frontend/
