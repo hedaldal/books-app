@@ -71,7 +71,7 @@ public sealed class InMemoryBookRepository : IBookRepository
             Title = source.Title,
             Author = source.Author,
             Isbn = source.Isbn,
-            CoverImageUrls = [.. source.CoverImageUrls],
+            CoverImageUrl = source.CoverImageUrl,
             Rating = source.Rating,
             Comments = source.Comments
         };

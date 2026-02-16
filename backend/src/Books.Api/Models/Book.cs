@@ -6,7 +6,7 @@ public sealed class Book
     public string Title { get; set; } = string.Empty;
     public string Author { get; set; } = string.Empty;
     public string Isbn { get; set; } = string.Empty;
-    public List<string> CoverImageUrls { get; set; } = [];
+    public string? CoverImageUrl { get; set; }
     public int? Rating { get; set; }
     public string? Comments { get; set; }
 }

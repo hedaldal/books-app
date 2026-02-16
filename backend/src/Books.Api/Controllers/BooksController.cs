@@ -88,10 +88,7 @@ public sealed class BooksController(IBookRepository repository) : ControllerBase
             Title = request.Title!.Trim(),
             Author = request.Author!.Trim(),
             Isbn = request.Isbn!.Trim(),
-            CoverImageUrls = request.CoverImageUrls?
-                .Where(url => !string.IsNullOrWhiteSpace(url))
-                .Select(url => url.Trim())
-                .ToList() ?? [],
+            CoverImageUrl = string.IsNullOrWhiteSpace(request.CoverImageUrl) ? null : request.CoverImageUrl.Trim(),
             Rating = request.Rating,
             Comments = string.IsNullOrWhiteSpace(request.Comments) ? null : request.Comments.Trim()
         };

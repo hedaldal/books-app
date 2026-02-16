@@ -18,7 +18,7 @@ public static class BookValidation
         AddRequiredAndLength(errors, nameof(request.Title), request.Title, MaxTitleLength);
         AddRequiredAndLength(errors, nameof(request.Author), request.Author, MaxAuthorLength);
         AddRequiredAndLength(errors, nameof(request.Isbn), request.Isbn, MaxIsbnLength);
-        ValidateCoverImageUrls(errors, request.CoverImageUrls);
+        ValidateCoverImageUrl(errors, request.CoverImageUrl);
 
         ValidateRatingAndComments(errors, request.Rating, request.Comments);
 
@@ -60,31 +60,22 @@ public static class BookValidation
         }
     }
 
-    private static void ValidateCoverImageUrls(Dictionary<string, List<string>> errors, List<string>? coverImageUrls)
+    private static void ValidateCoverImageUrl(Dictionary<string, List<string>> errors, string? coverImageUrl)
     {
-        if (coverImageUrls is null || coverImageUrls.Count == 0)
+        if (string.IsNullOrWhiteSpace(coverImageUrl))
         {
             return;
         }
 
-        foreach (var url in coverImageUrls)
+        var trimmed = coverImageUrl.Trim();
+        if (trimmed.Length > MaxCoverImageUrlLength)
         {
-            if (string.IsNullOrWhiteSpace(url))
-            {
-                AddError(errors, "CoverImageUrls", "CoverImageUrls must not contain empty values.");
-                continue;
-            }
+            AddError(errors, "CoverImageUrl", $"CoverImageUrl must be {MaxCoverImageUrlLength} characters or fewer.");
+        }
 
-            var trimmed = url.Trim();
-            if (trimmed.Length > MaxCoverImageUrlLength)
-            {
-                AddError(errors, "CoverImageUrls", $"Each cover image URL must be {MaxCoverImageUrlLength} characters or fewer.");
-            }
-
-            if (!Uri.TryCreate(trimmed, UriKind.Absolute, out _))
-            {
-                AddError(errors, "CoverImageUrls", "Each cover image URL must be a valid absolute URL.");
-            }
+        if (!Uri.TryCreate(trimmed, UriKind.Absolute, out _))
+        {
+            AddError(errors, "CoverImageUrl", "CoverImageUrl must be a valid absolute URL.");
         }
     }
 
