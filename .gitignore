@@ -1,4 +1,4 @@
-# .NET
+# backend
 **/bin/
 **/obj/
 .vs/
@@ -9,4 +9,8 @@
 *.user
 *.suo
 
-frontend/
+# frontend
+node_modules
+dist/
+.DS_Store
+.vscode 
