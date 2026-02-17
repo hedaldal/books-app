@@ -1,6 +1,10 @@
 <template>
   <section>
-    <div class="toolbar mb-5">
+    <div class="text-h6 font-weight-bold">My Books</div>
+    <div class="text-caption text-medium-emphasis">
+      Manage your book collection and discover new reads.
+    </div>
+    <div class="toolbar my-4">
       <v-text-field
         v-model="search"
         label="Search title or author"
@@ -23,11 +27,26 @@
         @update:model-value="applyFilters"
       />
 
-      <v-btn color="primary" variant="flat" @click="applyFilters">Search</v-btn>
-      <v-btn color="primary" variant="tonal" @click="showAddDialog = true">Add Book</v-btn>
+      <v-btn
+        color="primary"
+        variant="flat"
+        prepend-icon="mdi-magnify"
+        class="text-none"
+        @click="applyFilters"
+        >Search</v-btn
+      >
+      <v-btn
+        color="primary"
+        variant="tonal"
+        prepend-icon="mdi-plus"
+        class="text-none"
+        @click="showAddDialog = true"
+        >Add Book</v-btn
+      >
     </div>
 
     <v-alert v-if="error" type="error" variant="tonal" class="mb-4">{{ error }}</v-alert>
+    <div class="text-medium-emphasis mb-3">{{ books.length }} of {{ totalCount }} books</div>
 
     <div class="book-list">
       <BookCard
@@ -48,7 +67,6 @@
     </div>
 
     <div class="d-flex justify-space-between align-center mt-6 flex-wrap ga-4">
-      <div class="text-medium-emphasis">{{ totalCount }} books</div>
       <v-pagination
         v-model="page"
         :length="totalPages"
@@ -142,6 +160,7 @@ const handleCreate = async (payload: CreateBookPayload) => {
     page.value = 1;
     await loadBooks();
   } catch (errorValue: unknown) {
+    showAddDialog.value = false;
     error.value = extractApiError(errorValue);
   }
 };
@@ -157,6 +176,7 @@ const handleUpdate = async (payload: UpdateBookPayload) => {
     showEditDialog.value = false;
     await loadBooks();
   } catch (errorValue: unknown) {
+    showEditDialog.value = false;
     error.value = extractApiError(errorValue);
   }
 };
@@ -172,6 +192,7 @@ const handleDelete = async () => {
     showDeleteDialog.value = false;
     await loadBooks();
   } catch (errorValue: unknown) {
+    showDeleteDialog.value = false;
     error.value = extractApiError(errorValue);
   }
 };

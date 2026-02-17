@@ -34,14 +34,14 @@
           <v-spacer />
           <v-divider class="mx-4 my-3" />
           <v-list class="px-0 pb-4">
-            <v-list-item class="px-5 user-item" rounded="lg">
+            <v-list-item class="px-5 user-item" rounded="lg" @click="router.push(`settings`)">
               <template #prepend>
                 <v-avatar size="32" color="white" class="mr-3">
                   <v-icon size="18" color="primary">mdi-account</v-icon>
                 </v-avatar>
               </template>
 
-              <v-list-item-title class="text-body-2"> Ezgi Ozturk </v-list-item-title>
+              <v-list-item-title class="text-body-2">{{ profileName }}</v-list-item-title>
 
               <template #append>
                 <v-icon size="18">mdi-chevron-right</v-icon>
@@ -57,7 +57,13 @@
       <v-app-bar-title class="ml-2">{{ route.meta.title || 'Dashboard' }}</v-app-bar-title>
       <template v-if="mobile">
         <v-spacer />
-        <v-avatar v-if="mobile" size="32" color="grey" class="mr-4 cursor-pointer">
+        <v-avatar
+          v-if="mobile"
+          size="32"
+          color="grey"
+          class="mr-4 cursor-pointer"
+          @click="router.push(`settings`)"
+        >
           <v-icon size="18">mdi-account</v-icon>
         </v-avatar>
       </template>
@@ -71,14 +77,17 @@
   </v-app>
 </template>
 <script setup lang="ts">
+import { useProfile } from '@/composables/useProfile';
 import { ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { useDisplay } from 'vuetify';
 
 const { mobile } = useDisplay();
 
 const route = useRoute();
+const router = useRouter();
 const drawer = ref(!mobile.value);
+const { profileName } = useProfile();
 
 const navItems = [
   { title: 'My Books', to: '/books', icon: 'mdi-book-outline' },

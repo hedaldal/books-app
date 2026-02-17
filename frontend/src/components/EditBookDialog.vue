@@ -12,6 +12,7 @@
           variant="outlined"
           density="comfortable"
           class="mt-2"
+          maxlength="1000"
           :error="commentsRequired"
           :error-messages="commentsRequired ? 'Comments are required when rating is provided.' : ''"
         />

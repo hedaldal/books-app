@@ -10,6 +10,7 @@
               density="comfortable"
               v-model.trim="form.title"
               label="Title"
+              maxlength="200"
               :rules="[requiredRule]"
             />
             <v-text-field
@@ -17,6 +18,7 @@
               density="comfortable"
               v-model.trim="form.author"
               label="Author"
+              maxlength="100"
               :rules="[requiredRule]"
             />
             <v-text-field
@@ -24,12 +26,14 @@
               density="comfortable"
               v-model="form.isbn"
               label="ISBN"
+              maxlength="32"
               :rules="[requiredRule]"
             />
             <v-text-field
               variant="outlined"
               density="comfortable"
               v-model.trim="form.coverImageUrl"
+              maxlength="2048"
               label="Cover Image URL"
             />
 
@@ -42,6 +46,7 @@
               rows="2"
               variant="outlined"
               density="comfortable"
+              maxlength="1000"
               :rules="[commentsRequiredWhenRatedRule(form.rating), noHorribleRule]"
             />
           </div>
@@ -49,12 +54,7 @@
         <v-card-actions class="mx-3 mt-n3 mb-2">
           <v-spacer />
           <v-btn variant="text" @click="open = false">Cancel</v-btn>
-          <v-btn
-            type="submit"
-            color="primary"
-            variant="flat"
-            prepend-icon="mdi-content-save"
-            @click="submit"
+          <v-btn color="primary" variant="flat" prepend-icon="mdi-content-save" @click="submit"
             >Save</v-btn
           >
         </v-card-actions>
